@@ -15,14 +15,24 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/ycmd'
+Plugin 'vim-scripts/taglist.vim'
 
 " Required, plugins available after
 call vundle#end()            " required
 
 " Above Plugin Settings
-let mapleader=","       " Leader for Nerdtree
+let mapleader=","       " Define global Leader for shortcut
+
+" Syntastic Check additional config
 let g:syntastic_mode_map = { 'mode': 'passive' }   " Perform syntastic test manually
+
+" YouCompleteMe C-code completion additional config
 autocmd CompleteDone * pclose  " YouCompleteMe close Preview automatically
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py" " Copied for C-family from ycmd/cpp dir
+let g:ycm_confirm_extra_conf = 0  " Avoid confirmation to load over again
+let g:ycm_enable_diagnostic_highlighting = 0  " Turn of highlighting
+
 
 " Below are the commands that are not part of Vundle
 filetype plugin indent on
@@ -35,21 +45,6 @@ color jellybeans
 let g:jellybeans_use_lowcolor_black = 0
 
 set encoding=utf-8
-
-" Tabs and spaces
-set expandtab       " insert spaces when hitting TABs
-set textwidth=120   " lines longer than 120 columns will be broken
-set tabstop=4       " a hard TAB displays as 4 columns
-set softtabstop=4   " insert/delete 4 spaces when hitting a TAB/BACKSPACE
-set shiftwidth=4    " operation >> indents 4 columns; << unindents 4 columns
-set backspace+=start,eol,indent
-
-" Indenting
-set autoindent
-set shiftround      " Use multiple of shiftwidth when indenting with '<' and '>'
-" set smartindent
-" set copyindent
-
 
 " General
 set number          " show line numbers
@@ -101,6 +96,11 @@ nmap <leader>n :NERDTreeToggle<CR>
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore = ['tmp']
 
+
+" Ctags
+set autochdir " look in parent directory parent for the tags file, recursively.
+set tags=tags;
+
 " strip trailing whitespace on save for some filetypes
 autocmd FileType c,cpp,python,javascript,htmldjango,less,scss,css,make,json,jade
     \ autocmd BufWritePre <buffer> :%s/\s\+$//e
@@ -133,3 +133,29 @@ nmap <leader>p :!clear;python %<CR>
 ab impdb import ipdb
 ab ips   import ipdb; ipdb.set_trace()
 ab ist   ipdb.set_trace()
+
+
+
+" Tabs and spaces  - Keep at the EOF as some plugin seems to override the expantab
+set expandtab       " insert spaces when hitting TABs
+set textwidth=120   " lines longer than 120 columns will be broken
+set tabstop=4       " a hard TAB displays as 4 columns
+set softtabstop=4   " insert/delete 4 spaces when hitting a TAB/BACKSPACE
+set shiftwidth=4    " operation >> indents 4 columns; << unindents 4 columns
+set backspace+=start,eol,indent
+
+" Indenting
+set autoindent
+set shiftround      " Use multiple of shiftwidth when indenting with '<' and '>'
+set smartindent
+set copyindent
+
+
+
+
+
+" References
+" YouCompleteMe(C-family) - http://www.alexeyshmalko.com/2014/youcompleteme-ultimate-autocomplete-plugin-for-vim/ 
+
+
+
