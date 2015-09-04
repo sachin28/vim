@@ -11,6 +11,7 @@ Plugin 'gmarik/Vundle.vim'
 " Plugins
 Plugin 'elzr/vim-json'
 Plugin 'nanotech/jellybeans.vim'
+Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-fugitive'
@@ -96,7 +97,6 @@ nmap <leader>n :NERDTreeToggle<CR>
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore = ['tmp']
 
-
 " Ctags
 set autochdir " look in parent directory parent for the tags file, recursively.
 set tags=tags;
@@ -128,6 +128,9 @@ hi ColorColumn ctermbg=lightgrey guibg=lightgrey
 
 " Compile python code from vim
 nmap <leader>p :!clear;python %<CR>
+
+" nvie/vim-flake8
+nmap <leader>f :call Flake8()<CR>
 
 " Shortcuts for syntax
 ab impdb import ipdb
