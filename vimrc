@@ -18,6 +18,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Valloric/ycmd'
 Plugin 'vim-scripts/taglist.vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'bling/vim-airline'
 
 " Required, plugins available after
 call vundle#end()            " required
@@ -49,7 +51,7 @@ set encoding=utf-8
 
 " General
 set number          " show line numbers
-set paste
+" set paste
 set wildmenu        " visual autocomplete for command menu
 set title           " Show filename.ext and path
 set noeb vb t_vb=   " stop beep
@@ -96,6 +98,11 @@ set title
 nmap <leader>n :NERDTreeToggle<CR>
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore = ['tmp']
+
+" ack: search word
+nmap <leader>a :tab split<CR>:Ack ""<Left>
+" ack: search word under cursor
+nmap <leader>A :tab split<CR>:Ack <C-r><C-w><CR>
 
 " Ctags
 set autochdir " look in parent directory parent for the tags file, recursively.
