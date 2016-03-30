@@ -11,42 +11,34 @@ Plugin 'gmarik/Vundle.vim'
 " Plugins
 Plugin 'elzr/vim-json'
 Plugin 'nanotech/jellybeans.vim'
+Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-fugitive'
+" Plugin 'vim-scripts/pylint-mode'
 " Plugin 'Valloric/YouCompleteMe'
+Plugin 'mileszs/ack.vim'
+Plugin 'bling/vim-airline'
 
 " Required, plugins available after
 call vundle#end()            " required
 
 " Above Plugin Settings
-let g:syntastic_mode_map = { 'mode': 'passive' }   " Perform syntastic test manually
+" let g:syntastic_mode_map = { 'mode': 'passive' }   " Perform syntastic test manually
 " autocmd CompleteDone * pclose  " YouCompleteMe close Preview automatically
 
 
 " Below are the commands that are not part of Vundle
-let mapleader=","       " Leader for Nerdtree
+let mapleader=","       " Leader
 
 " Color
 color jellybeans
 let g:jellybeans_use_lowcolor_black = 0
 
+" Cursor color
+
+" Encoding
 set encoding=utf-8
-
-" Tabs and spaces
-set textwidth=79  " lines longer than 79 columns will be broken
-set tabstop=8     " a hard TAB displays as 4 columns
-set expandtab     " insert spaces when hitting TABs
-set softtabstop=4 " insert/delete 4 spaces when hitting a TAB/BACKSPACE
-set shiftwidth=4  " operation >> indents 4 columns; << unindents 4 columns
-filetype indent on
-
-" Indenting
-"filetype plugin indent on
-set shiftround    " Use multiple of shiftwidth when indenting with '<' and '>'
-set autoindent    " align the new line indent with the previous line
-set smartindent
-set backspace=start,eol,indent
 
 
 " Syntax
@@ -112,6 +104,23 @@ nmap <leader>n :NERDTreeToggle<CR>
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore = ['tmp']
 
+" ack: search word
+nmap <leader>a :tab split<CR>:Ack ""<Left>
+" ack: search word under cursor
+nmap <leader>A :tab split<CR>:Ack <C-r><C-w><CR>
+
+
+" Ctags
+set autochdir
+set tags=tags;
+
+
+" nvie/vim-flake8
+nmap <leader>f :call Flake8()<CR>
+
+" vim-scripts/pylint-mode
+let g:PyLintCWindow = 1
+
 " strip trailing whitespace on save for some filetypes
 autocmd FileType c,cpp,python,javascript,htmldjango,less,scss,css,make,json,jade
     \ autocmd BufWritePre <buffer> :%s/\s\+$//e
@@ -135,7 +144,13 @@ match ExtraWhitespace /\s\+$/
 " let max_width=$MAX_WIDTH
 let max_width=120
 " execute "set cc=".max_width
-hi ColorColumn ctermbg=lightgrey guibg=lightgrey
+ hi ColorColumn ctermbg=lightgrey guibg=lightgrey
+
+if exists('+colorcolumn')
+    set colorcolumn=80
+else
+    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
 
 " Compile python code from vim
 nmap <leader>p :!clear;python %<CR>
@@ -146,3 +161,19 @@ map <leader>r :retab <CR> :wq! <CR>
 ab impdb import ipdb
 ab ips   import ipdb; ipdb.set_trace()
 ab ist   ipdb.set_trace()
+
+
+" Tabs and spaces
+set textwidth=79  " lines longer than 79 columns will be broken
+set tabstop=8     " a hard TAB displays as 4 columns
+set softtabstop=4 " insert/delete 4 spaces when hitting a TAB/BACKSPACE
+set shiftwidth=4  " operation >> indents 4 columns; << unindents 4 columns
+set expandtab     " insert spaces when hitting TABs
+filetype indent on
+
+" Indenting
+"filetype plugin indent on
+set shiftround    " Use multiple of shiftwidth when indenting with '<' and '>'
+set autoindent    " align the new line indent with the previous line
+set smartindent
+set backspace=start,eol,indent
